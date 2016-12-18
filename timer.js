@@ -1,7 +1,7 @@
 var timer = function() {
   var
     timers = {},
-    set, de, isSet;
+    set, del, isSet;
 
   set = function( timerID, callback, timeout) {
     if ( isSet( timerID ) ) {
