@@ -29,13 +29,16 @@
             function() {
               self.__queueFn();
               self.__queue.shift();
-              if (timeout > 0) self.__queue.shift();
+              self.__queue.shift();
               self.__resolveQueue( self.__queue );
             }, timeout );
         };
 
         this.__clearQueue = function() {
-          
+          clearTimeout( self.__queueTimer );
+          self.__queueTimer = null;
+          self.__queueFn = null;
+          self.__queue = [];
         };
       }
 
@@ -52,6 +55,7 @@
       timerPublic.del = del = function( timerID ) {
         if ( isSet( timerID ) ) {
           clearTimeout( timers[ timerID ].timer );
+          timers[ timerID ].__clearQueue();
           delete timers[ timerID ];
           return true;
         }
